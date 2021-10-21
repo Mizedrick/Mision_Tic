@@ -1,0 +1,62 @@
+package com.bike.controller;
+
+import com.bike.model.Category;
+import com.bike.service.categoryService;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+/**
+ * Controlador con las peticiones Get Post Put y Delete de la tabla Category
+ * @author Misael
+ */
+@RestController
+@RequestMapping("/Category")
+@CrossOrigin("*")
+public class categoryController {
+    
+    /**
+     * Instancia al servicio de servicios
+     */
+    @Autowired
+    private categoryService servicios;
+    
+    /**
+     * Metodo para obtener una lista de los elementos de la tabla Category
+     * @return Lista de elementos de la tabla Category
+     */
+    @GetMapping("/all")
+    public List<Category> getCategoria() {
+        return servicios.getAll();
+    }
+    
+    /**
+     * Metodo para obtener un elemento de la tabla Category
+     * @param idCategoria = Identificador del elemento a buscar
+     * @return Un elemento de la tabla Category con el identificador idCategory
+     */
+    @GetMapping("/{id}")
+    public Optional<Category> getCategoria(@PathVariable("id") int idCategoria) {
+        return servicios.getCategoria(idCategoria);
+    }
+    
+    /**
+     * Metodo para guardar un elemento en la tabla Category
+     * @param categoria = Elemento a guardar en la tabla
+     */
+    @PostMapping("/save")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void save(@RequestBody Category categoria) {
+        servicios.save(categoria);
+    }
+    
+}
