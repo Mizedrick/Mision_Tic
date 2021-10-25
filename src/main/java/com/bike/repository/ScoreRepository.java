@@ -26,4 +26,8 @@ public class ScoreRepository {
     public Score save(Score score){
         return crud.save(score);
     }
+    
+    public void delete(int id){
+        crud.deleteById(id);
+    }
 }

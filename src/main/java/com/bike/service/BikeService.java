@@ -40,4 +40,35 @@ public class BikeService {
             }
         }
     }
+    
+    public Bike update(Bike bike){
+        if(bike.getId()!=null){
+            Optional<Bike> bikeEdit = metodosCrud.getBikes(bike.getId());
+            if(!bikeEdit.isEmpty()){
+                if(bike.getName()!=null){
+                    bikeEdit.get().setName(bike.getName());
+                }
+                if(bike.getBrand()!=null){
+                    bikeEdit.get().setBrand(bike.getBrand());
+                }
+                if(bike.getYear()!=null){
+                    bikeEdit.get().setYear(bike.getYear());
+                }
+                if(bike.getDescription()!=null){
+                    bikeEdit.get().setDescription(bike.getDescription());
+                }
+                return metodosCrud.save(bikeEdit.get());
+            }
+        }
+        return bike;
+    }
+    
+    public boolean delete(int id){
+        Boolean delete = getBikes(id).map(bike ->{
+            metodosCrud.delete(bike.getId());
+            return true;
+        }).orElse(false);
+        
+        return delete;
+    }
 }

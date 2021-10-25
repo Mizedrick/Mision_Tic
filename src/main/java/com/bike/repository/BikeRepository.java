@@ -27,4 +27,8 @@ public class BikeRepository {
     public Bike save(Bike bikes){
         return crud.save(bikes);
     }
+    
+    public void delete(int id){
+        crud.deleteById(id);
+    }
 }

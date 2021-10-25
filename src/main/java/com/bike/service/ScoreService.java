@@ -40,4 +40,29 @@ public class ScoreService {
             }
         }
     }
+    
+    public Score update(Score score){
+        if(score.getIdScore()!=null){
+            Optional<Score> scoreEdit = metodosCrud.getScore(score.getIdScore());
+            if(!scoreEdit.isEmpty()){
+                if(score.getMessageText()!=null){
+                    scoreEdit.get().setMessageText(score.getMessageText());
+                }
+                if(score.getStars()!=null){
+                    scoreEdit.get().setStars(score.getStars());
+                }
+                return metodosCrud.save(scoreEdit.get());
+            }
+        }
+        return score;
+    }
+    
+    public boolean delete(int id){
+        Boolean delete = getScore(id).map(score ->{
+            metodosCrud.delete(score.getIdScore());
+            return true;
+        }).orElse(false);
+        
+        return delete;
+    }
 }
